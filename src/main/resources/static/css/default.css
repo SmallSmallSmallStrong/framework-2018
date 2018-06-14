@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+body {
+    font-family: "Microsoft YaHei", "iconfont" !important;
+}
+
+.dataTables_wrapper{
+	margin-bottom: 150px;
+}
+
+.footer {
+	border-top: 0;
+    position: absolute;
+    bottom: 0;
+    width: 96%;
+}

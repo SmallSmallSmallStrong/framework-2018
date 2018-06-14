@@ -1,0 +1,49 @@
+.sider{
+	margin: 0;padding: 0;
+	width: 250px;
+}
+.sider ul{
+	list-style-type: none;
+}
+.sider ul li{
+	width: 100%;
+ 
+	line-height: 30px;
+	background-color: #ccc;
+	font-weight: 700;
+	text-decoration: none; 
+}
+.sider ul li a{
+	padding-left: 10px;
+}
+.sider ul li a:link,.sider ul li a:visited{
+	cursor: pointer;
+	color: blue;
+}
+.sider ul li a:hover,.sider ul li a:active{
+	cursor: pointer;
+	color: blue;
+}
+
+.sider ul li ul{
+	padding-left: 0;
+
+}
+.sider ul li ul li a{
+	 padding-left: 10px;
+}
+.sider ul li ul li a span{
+	color: red;
+	 float: right;
+	 padding-right: 10px;
+}
+.sider ul li ul li{
+	width: 100%;
+	font-size: 14px;
+	height: 26px;
+	line-height: 26px;
+
+	background-color: #f5f5f5;
+	border-bottom: 1px solid #ccc;
+	font-weight: 400;
+}
