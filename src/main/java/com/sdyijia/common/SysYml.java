@@ -6,14 +6,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-//@Component
-//@ConfigurationProperties(prefix="sys")
-@ConfigurationProperties(prefix = "sys")
-//@PropertySource("classpath:sys.yml")
+//@ConfigurationProperties(prefix = "sys", value = "classpath:application.properties")
+@Component
 public class SysYml {
 
-    @Value("privateKey")
+    @Value("${privateKey}")
     private String privateKey;
+    @Value("${appname}")
+    private String appname;
+    @Value("${copyright}")
+    private String copyright;
+    @Value("${address}")
+    private String address;
+
 
     public String getPrivateKey() {
         return privateKey;
@@ -21,5 +26,29 @@ public class SysYml {
 
     public void setPrivateKey(String privateKey) {
         this.privateKey = privateKey;
+    }
+
+    public String getAppname() {
+        return appname;
+    }
+
+    public void setAppname(String appname) {
+        this.appname = appname;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

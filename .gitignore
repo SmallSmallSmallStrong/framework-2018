@@ -32,3 +32,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+/.idea/
+/target/
+sdyijia-framework-2018.iml

@@ -22,7 +22,7 @@ import java.util.*;
 @RequestMapping("/user")
 public class UserController {
     //前缀--文件夹名--如果有多层文件夹就写多层
-    private final String PREFIX = "user/";
+    private final String PREFIX = "/sys/user/";
 
 
     @Autowired
@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping
     public String reg() {
-        return "reg";
+        return "sys/user/reg";
     }
 
     /**
@@ -58,11 +58,11 @@ public class UserController {
             user.setPassword(user.getPassword());
         } else {
             m.addAttribute("message", "用户信息填写不完整");
-            return "error/error";
+            return "base/error";
         }
         user.setState((byte) 0);
         sysUserService.save(user);
-        return "redirect:/login";
+        return "redirect:/login"  ;
     }
 
 

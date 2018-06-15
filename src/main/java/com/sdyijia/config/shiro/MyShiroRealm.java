@@ -13,6 +13,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -72,7 +73,9 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (userInfo.getState() == 2) {//用户锁定了
             throw new LockedAccountException();
         }
-        if (!userInfo.getPassword().equals(usernamePasswordToken.getPassword())) {//密码不对
+        char[] pwd = usernamePasswordToken.getPassword();
+        String strpwd = new String(pwd);
+        if (!userInfo.getPassword().equals(strpwd)) {//密码不对
             throw new IncorrectCredentialsException();
         }
         logger.info("----->>userInfo=" + userInfo);

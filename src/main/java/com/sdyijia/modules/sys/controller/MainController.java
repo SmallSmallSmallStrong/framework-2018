@@ -1,5 +1,6 @@
 package com.sdyijia.modules.sys.controller;
 
+import com.sdyijia.common.SysYml;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
 import com.sdyijia.modules.sys.repository.PermissionRepository;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,8 @@ public class MainController {
     UserRepository userRepository;
     @Autowired
     PermissionRepository permissionRepository;
+    @Autowired
+    SysYml sysYml;
 
     @GetMapping("/login")
     public String login(Model m, RedirectAttributes redirectAttributes) {
@@ -50,8 +54,10 @@ public class MainController {
         if (map != null && map.size() > 0) {
             m.addAllAttributes(map);
         }
-        m.addAttribute("title", "框架");
-        return LOGIN;
+        m.addAttribute("title", sysYml.getAppname());
+        m.addAttribute("copyright", sysYml.getCopyright());
+        m.addAttribute("address", sysYml.getAddress());
+        return "sys/login";
     }
 
     @RequestMapping("/")
@@ -138,6 +144,5 @@ public class MainController {
         System.out.println("------没有权限-------");
         return "403";
     }
-
 
 }
