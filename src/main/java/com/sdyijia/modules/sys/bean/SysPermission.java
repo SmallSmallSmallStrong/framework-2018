@@ -1,24 +1,45 @@
 package com.sdyijia.modules.sys.bean;
 
 import com.sdyijia.modules.base.bean.Base;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.hibernate.annotations.CascadeType.*;
+
 @Entity
 public class SysPermission extends Base {
+    /**
+     * 排序
+     */
+    private Integer sort;
     private String name;//名称.
     @Column(columnDefinition = "enum('menu','button')")
     private String resourceType;//资源类型，[menu|button]
     private String url;//资源路径.
     private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
-    private Long parentId; //父编号
-    private String parentIds; //父编号列表
-    private Boolean available = Boolean.FALSE;
+    @ManyToOne
+    private SysPermission parent; //父编号
+    @OneToMany
+    @Cascade(value = {REMOVE})
+    private List<SysPermission> children = new ArrayList<>(); //子编号
+    private Integer level;//等级
+    private Boolean available = Boolean.FALSE;//是否可用
     @ManyToMany
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<SysRole> roles;
+    /**
+     * 图片地址
+     */
+    private String imgUrl;
+
+    /**
+     * 是否左侧显示
+     */
+    private boolean showLeft;
 
 
     public String getName() {
@@ -53,20 +74,20 @@ public class SysPermission extends Base {
         this.permission = permission;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public SysPermission getParent() {
+        return parent;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParent(SysPermission parent) {
+        this.parent = parent;
     }
 
-    public String getParentIds() {
-        return parentIds;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public Boolean getAvailable() {
@@ -85,6 +106,38 @@ public class SysPermission extends Base {
         this.roles = roles;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+
+    public boolean getShowLeft() {
+        return showLeft;
+    }
+
+    public void setShowLeft(boolean showLeft) {
+        this.showLeft = showLeft;
+    }
+
+    public List<SysPermission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysPermission> children) {
+        this.children = children;
+    }
 
     @Override
     public boolean equals(Object o) {

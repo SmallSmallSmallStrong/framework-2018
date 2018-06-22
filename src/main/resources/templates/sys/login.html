@@ -9,7 +9,6 @@
         }
     </style>
 </head>
-
 <body  >
 <div class="container">
     <div class="con">
@@ -44,6 +43,7 @@
                         <input type="button" id="login_btn" class="btn"
                                onclick="login('username','password','loginForm','inputcode');" value="登&nbsp;录"/>
                     </a>
+                    <a th:href="@{/sys/user/reg}">注册</a>
                 </div>
                 <div style="text-align: center;">
                     <span class="usernameTip passwordTip" id="nameInfo" th:text="${message}"></span>

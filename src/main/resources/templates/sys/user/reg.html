@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head  th:insert="~{base/header::header}" >
+<head th:insert="~{base/header::header}">
     <meta charset="UTF-8">
     <title>注册</title>
 </head>
-<body>
+<body th:with="component = '123',src = '222'">
 注册用户
-<form th:action="@{/user/}" th:method="post">
+<form th:action="@{/sys/user/reg}" th:method="post">
     <div id="add" class="form-group">
         <label for="loginName">帐号</label>
         <input id="loginName" type="text" class="form-control" name="username" maxlength="20"/>
     </div>
-    <div  class="form-group">
+    <div class="form-group">
         <label for="password">密码</label>
         <input id="password" type="text" class="form-control" name="password" maxlength="20"/>
     </div>

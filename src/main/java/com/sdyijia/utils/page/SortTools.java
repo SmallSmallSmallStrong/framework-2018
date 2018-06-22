@@ -5,10 +5,10 @@ import org.springframework.data.domain.Sort;
 
 public class SortTools {
     /**
-     * @return 根据id倒叙
+     * @return 根据id正序
      */
     public static Sort basicSort() {
-        return basicSort("id", "desc");
+        return basicSort("id", "ASC");
     }
 
     /**
@@ -30,7 +30,10 @@ public class SortTools {
      * @return 排序规则
      */
     public static Sort basicSort(SortDto... dtos) {
-        Sort result = null;
+        Sort result = Sort.unsorted();//这个是框架默认
+        if (dtos == null) {
+            return result;
+        }
         for (int i = 0; i < dtos.length; i++) {
             SortDto dto = dtos[i];
             if (result == null) {

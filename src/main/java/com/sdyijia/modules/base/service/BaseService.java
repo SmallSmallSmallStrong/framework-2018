@@ -11,6 +11,10 @@ import java.util.Date;
 
 public abstract class BaseService<D extends CrudRepository<T, Long>, T extends Base> {
 
+    /** 上传文件路径 */
+    public static final String UPLOADURL = "/file";
+
+
     @Autowired
     protected D repository;
 
@@ -52,5 +56,7 @@ public abstract class BaseService<D extends CrudRepository<T, Long>, T extends B
     public D $() {
         return repository;
     }
+
+
 
 }

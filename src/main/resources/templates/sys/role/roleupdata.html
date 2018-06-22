@@ -6,12 +6,12 @@
 </head>
 <body>
 <a href="../login">主页</a>
-<form th:action="@{updata}" th:method="post">
-    <input th:name="id" type="hidden" th:value="${role.id}">
-    角色名<input th:name="role" type="text" th:value="${role.role}"><br>
-    角色描述<input th:name="description" type="text" th:value="${role.description}"><br>
-    角色是否可用<input th:name="available" th:type="radio"  th:checked="${role.available?1:0}" th:value="true">是
-    <input th:name="available" th:type="radio"   th:checked="${role.available?0:1}" th:value="false">否 <br>
+<form th:action="@{/sys/role/updata}" th:method="post">
+    <input th:name="id" type="hidden" th:value="${dbrole.id}">
+    角色名<input th:name="role" type="text" th:value="${dbrole.name}"><br>
+    角色描述<input th:name="description" type="text" th:value="${dbrole.description}"><br>
+    角色是否可用<input th:name="available" th:type="radio" th:checked="${dbrole.available?1:0}" th:value="true">是
+    <input th:name="available" th:type="radio" th:checked="${dbrole.available?0:1}" th:value="false">否 <br>
     <input th:type="submit" th:value="提交">
 </form>
 </body>

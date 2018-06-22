@@ -19,10 +19,11 @@ import javax.validation.Valid;
 import java.util.*;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
     //前缀--文件夹名--如果有多层文件夹就写多层
     private final String PREFIX = "/sys/user/";
+    private final String REG = PREFIX + "reg";
+
 
 
     @Autowired
@@ -35,7 +36,7 @@ public class UserController {
     private String restpwd;
 
 
-    @GetMapping
+    @GetMapping(REG)
     public String reg() {
         return "sys/user/reg";
     }
@@ -46,7 +47,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/")
+    @PostMapping(REG)
     public String reg(@Valid SysUser user, Model m) throws Exception {
         //Set<Long> roleIds = Arrays.stream(roles).map(Long::valueOf).collect(Collectors.toSet());
         //Set<Role> roleSet = roleRepository.findAll(roleIds).stream().collect(Collectors.toSet());
@@ -62,7 +63,7 @@ public class UserController {
         }
         user.setState((byte) 0);
         sysUserService.save(user);
-        return "redirect:/login"  ;
+        return "redirect:/login";
     }
 
 
@@ -193,7 +194,7 @@ public class UserController {
                 allrole.stream().filter(SysRole::getAvailable).forEach(role -> {
                     Map<String, Object> map = new HashMap<>();
                     map.put("id", role.getId());
-                    map.put("name", role.getRole());
+                    map.put("name", role.getCode());
                     if (userroles.contains(role)) {
                         map.put("ischecked", 1);//具有该角色
                     } else {
@@ -221,8 +222,10 @@ public class UserController {
     public String setRole(Long id, Long[] rids) {
         if (rids != null && rids.length > 0) {
             List<SysRole> roles = roleRepository.findAllById(Arrays.asList(rids));
+            ArrayList tmp = new ArrayList();
+            tmp.addAll(roles);
             SysUser user = userRepository.getOne(id);
-            user.setRoleList(roles);
+            user.setRoleList(tmp);
             userRepository.save(user);
         }
         return "redirect:role?id=" + id;

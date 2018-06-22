@@ -13,7 +13,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -38,7 +37,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (Objects.nonNull(userInfo)) {
             for (SysRole role : userInfo.getRoleList()) {
                 //在此处为用户设置角色
-                authorizationInfo.addRole(role.getRole());
+                authorizationInfo.addRole(role.getCode());
                 for (SysPermission p : role.getPermissions()) {
                     //为用户设置权限
                     authorizationInfo.addStringPermission(p.getPermission());
@@ -87,5 +86,28 @@ public class MyShiroRealm extends AuthorizingRealm {
         );
         return authenticationInfo;
     }
+
+
+    /**
+     * 清除全部缓存的身份验证信息
+     */
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthorizationCache().clear();
+        logger.info("清除全部缓存的身份验证信息");
+    }
+
+    /**
+     * 清除全部缓存的授权信息信息
+     */
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+        logger.info("清除全部缓存的授权信息信息");
+    }
+
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
+    }
+
 
 }

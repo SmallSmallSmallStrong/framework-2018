@@ -1,9 +1,10 @@
 package com.sdyijia.modules.sys.controller;
 
 import com.sdyijia.common.SysYml;
+import com.sdyijia.modules.sys.bean.SysPermission;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
-import com.sdyijia.modules.sys.repository.PermissionRepository;
+import com.sdyijia.modules.sys.repository.SysPermissionRepository;
 import com.sdyijia.modules.sys.repository.RoleRepository;
 import com.sdyijia.modules.sys.repository.UserRepository;
 import com.sdyijia.utils.ECS.EncryptionUtils;
@@ -13,6 +14,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,11 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -40,7 +40,7 @@ public class MainController {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    PermissionRepository permissionRepository;
+    SysPermissionRepository sysPermissionRepository;
     @Autowired
     SysYml sysYml;
 
@@ -48,6 +48,29 @@ public class MainController {
     public String login(Model m, RedirectAttributes redirectAttributes) {
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
+            //首先获取角色 admin 除外
+            if (currentUser.hasRole("admin")) {
+                //获取 function ,
+                List<SysPermission> list = sysPermissionRepository.findAllByLevel(0, Sort.by("sort"));
+                m.addAttribute("functionList", list);
+            } else {
+                SysUser sysuser = (SysUser) currentUser.getPrincipal();//获取用户
+                List<SysRole> dbrolelist = sysuser.getRoleList();//获取用户所有角色
+                HashSet<SysPermission> sysPermissionSet = new HashSet<>();
+                dbrolelist.forEach(role -> {
+                    List<SysPermission> tmplist = role.getPermissions();
+                    List<SysPermission> plist = tmplist.stream().filter(sysPermission ->//过滤
+                            sysPermission.getResourceType().equals("menu")          //为菜单
+                                    && sysPermission.getLevel() == 0                //等级为0
+                                    && sysPermission.getShowLeft()                  //需要显示的权限
+                                    && sysPermission.getAvailable()                 //没有被废弃
+                    ).collect(Collectors.toList());
+                    sysPermissionSet.addAll(plist);//获取所有角色的所有权限，去重
+                });
+                List<SysPermission> list = new ArrayList<>(sysPermissionSet);
+                list.sort(Comparator.comparing(SysPermission::getSort));//转为arraylist按照sort排序
+                m.addAttribute("functionList", list);
+            }
             return INDEX;
         }
         Map<String, ?> map = redirectAttributes.getFlashAttributes();
@@ -123,7 +146,7 @@ public class MainController {
             //根据用户获取其权限列表
             List<SysRole> list = dbuser.getRoleList();
 //            list.forEach();
-            return INDEX;
+            return "redirect:/login";
         } else {
             token.clear();
             return "redirect:/login";
@@ -139,10 +162,15 @@ public class MainController {
     }
 
 
-    @RequestMapping("/403")
+    @RequestMapping("/500")
     public String unauthorizedRole() {
         System.out.println("------没有权限-------");
         return "403";
     }
 
+    @RequestMapping("/404")
+    public String notFound() {
+        System.out.println("------没有权限-------");
+        return "/html/404";
+    }
 }
