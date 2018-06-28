@@ -1,0 +1,41 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#tableDiv {
+    margin: 0 auto;
+}
+
+#tableDiv tr {
+    width: 1200px;
+    display: block;
+}
+
+#tableDiv tr td {
+    width: 194px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+#tableDiv tr td .tdDiv {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    justify-content: center;
+    margin-left: 15px;;
+
+    position: relative;
+}
+
+#tableDiv tr td .tdDiv input {
+    position: absolute;
+    left: 15px;
+}
+
+#tableDiv tr td .tdDiv label {
+    width: 130px;
+    margin-left: 30px;
+}

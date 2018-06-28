@@ -52,6 +52,7 @@ public class MainController {
             if (currentUser.hasRole("admin")) {
                 //获取 function ,
                 List<SysPermission> list = sysPermissionRepository.findAllByLevel(0, Sort.by("sort"));
+                list = list.stream().filter(sysPermission -> sysPermission.getShowLeft()).collect(Collectors.toList());
                 m.addAttribute("functionList", list);
             } else {
                 SysUser sysuser = (SysUser) currentUser.getPrincipal();//获取用户

@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="~{base/header::header}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
 <!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
-<a href="../login">主页</a>
-
-
-<div>
-    <a th:href="@{/role/toadd}">添加角色</a>
+<div class="cl pd-5 bg-1 bk-gray  ">
+    <div th:class="l">
+        <a href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
+           th:onclick="'javascript:add(\'添加\', \''+ @{${SAVE_URL}} + '\')'">
+            <i class="Hui-iconfont">&#xe600;</i>添加
+        </a>
+    </div>
 </div>
-<table>
+<table class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" border="1"
+       cellspacing="1">
     <tr>
-        <th>角色名</th>
-        <th>是否可用</th>
-        <th>描述</th>
-        <th>操作</th>
+        <th style="width: 10%;">Code</th>
+        <th style="width: 10%;">角色名</th>
+        <th style="width: 10%;">是否可用</th>
+        <th style="width: 10%;">描述</th>
+        <th style="width: 10%;">权限</th>
+        <th style="width: 10%;">操作</th>
     </tr>
     <tr th:each="role , stat : ${rolelist}">
-        <td th:text="${role.getRole()}"></td>
-        <td th:text="${role.getAvailable()}"></td>
-        <td th:text="${role.getDescription()}"></td>
+        <td th:text="${role.code}"></td>
+        <td th:text="${role.getName()}"></td>
+        <td th:text="${role.getAvailable()}==true?'可用':'废弃'"></td>
+        <td th:text="${role.remark}"></td>
         <td>
-            <a th:href="@{'/role/permission?ids='  + ${role.id} }">角色权限管理</a>
+            <a th:href="@{${SAVE_ROLE_PERMISSION_URL}(id=${role.id}) }">查看权限</a>
         </td>
         <td>
-            <a th:href="@{'/role/toupdate?id=' + ${role.id}}">修改</a>
-            <a th:href="@{'/role/delete?ids=' + ${role.id}}">删除</a>
+            <a th:href="@{${UP_URL}(id=${role.id})}">修改</a>
+            <a th:onclick="'javascript:confirm(\''+ @{${REMOVE_URL}(id=${role.id})} +'\')'" href="javascript:void(0);">删除</a>
         </td>
     </tr>
 </table>
+
+<script th:src="@{/modules/layui/layui.all.js}"></script>
+<script>
+
+</script>
 </body>
 </html>

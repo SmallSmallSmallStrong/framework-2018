@@ -14,7 +14,6 @@ function selectAll(groupId, className, obj) {
 
 /** 多条操作 */
 function manageMulti(groupId, className, url, msg) {
-
 	var selObjs = $('#' + groupId + ' .' + className + ':checked');
 	var selSize = selObjs.size();
 	if (selSize == 0) {
@@ -41,7 +40,11 @@ function joinUrlAddJump(url, selSize, selObjs) {
 	window.location = url + ids;
 }
 
-/** 提示 */
+/**
+ * 询问框
+ * @param url 点击确定触发的 url
+ * @param msg	询问框展示的消息
+ */
 function manageConfirm(url, msg) {
 	if (msg != null && msg.length > 0) {
 		layer.confirm(msg, function(index) {
@@ -51,6 +54,18 @@ function manageConfirm(url, msg) {
 		window.location = url;
 	}
 }
+
+/**
+ * 删除确认
+ * @param url
+ */
+function confirm(url) {
+    layer.confirm('确认删除？', {btn: ['是', '否']}, function (index) {
+        window.location = url;
+        layer.close(index);
+    });
+}
+
 
 /** 翻页 */
 function pageNext(curentPage) {
@@ -75,7 +90,7 @@ function pageNext(curentPage) {
 /** 修改iframe的src */
 function changeIframe(name, url) {
 	$("#Hui-tabNav .Hui-tabNav-wp #min_title_list li.active span").text(name);
-	$("#iframe_box .show_iframe #adminIframeId").prop("src", url);
+	$("#adminIframeId").prop("src", url);
 }
 
 /** 添加-修改 */

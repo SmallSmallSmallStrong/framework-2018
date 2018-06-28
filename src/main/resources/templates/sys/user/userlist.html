@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="~{base/header::header2(~{::title},~{},~{})}">
     <meta charset="UTF-8">
     <title>用户列表</title>
 </head>
 <body>
 <!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
-<a href="../login">主页</a>
 
 
-<a th:href="@{'/user/userAdd'}">添加用户</a>
+<div class="cl pd-5 bg-1 bk-gray  ">
+    <div th:class="l">
+        <a href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
+           th:onclick="'javascript:add(\'添加\', \''+ @{${SAVE}} + '\')'">
+            <i class="Hui-iconfont">&#xe600;</i>添加
+        </a>
+    </div>
+</div>
 
-    <table>
-        <tr>
-            <th>账号</th>
-            <th>名称</th>
-            <th>掩码</th>
-            <th>角色</th>
-            <th>用户状态</th>
-            <th>操作</th>
-        </tr>
 
-        <tr th:each="user,index:${userlist}">
-            <td th:text="${user.username}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.salt}"></td>
-            <td th:text="${user.roleList==null||user.roleList.size() == 0 ?'空':user.roleList[0].role}"></td>
-            <td th:text="${user.state}"></td>
-            <td  >
-                <a th:href="@{'/user/del?id=' + ${user.id}}">删除</a>
-                <a th:href="@{'/user/role?id=' + ${user.id}}">角色</a>
-                <a th:href="@{'/user/resetpwd?id=' + ${user.id}}">重置密码</a>
-                <a th:href="@{'/user/userUpdata?id=' + ${user.id}}">修改信息</a>
-            </td>
-        </tr>
-    </table>
+<table class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" border="1"
+       cellspacing="1">
+    <tr>
+        <th style="width: 10%;">账号</th>
+        <th style="width: 10%;">名称</th>
+        <th style="width: 10%;">掩码</th>
+        <th style="width: 10%;">角色</th>
+        <th style="width: 10%;">用户状态</th>
+        <th style="width: 10%;">操作</th>
+    </tr>
+
+    <tr th:each="user,index:${userlist}">
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.salt}"></td>
+        <td th:text="${user.roleList==null||user.roleList.size() == 0 ?'空': user.roleList[0].getName()  }"></td>
+        <td th:text="${user.state}"></td>
+        <td>
+            <!--<a th:onclick="javascript:manageConfirm('\'' + @{${REMOVE}(id=${user.id})} + '\'','确认删除?')" th:href="@{${REMOVE}(id=${user.id})}">删除</a>-->
+            <a th:onclick="'javascript:manageConfirm(\''+ @{${REMOVE}(id=${user.id})} + '\',\'确认删除?\')'"  href="javascript:void(0);">删除</a>
+            <a th:href="@{${SETROLE}(id=${user.id})}">角色</a>
+            <a th:href="@{${RESETPWD}(id=${user.id})}">重置密码</a>
+            <a th:href="@{${UPDATA}(id=${user.id})}">修改信息</a>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

@@ -19,12 +19,26 @@ import javax.validation.Valid;
 import java.util.*;
 
 @Controller
-public class UserController {
+public class UserController extends SysController {
     //前缀--文件夹名--如果有多层文件夹就写多层
     private final String PREFIX = "/sys/user/";
     private final String REG = PREFIX + "reg";
+    private final String LIST = PREFIX + "userList";
+    private final String SAVE = PREFIX + "save";
+    private final String REMOVE = PREFIX + "remove";
+    private final String UPDATA = PREFIX + "up";
+    private final String RESETPWD = PREFIX + "resetpwd";
+    private final String SETROLE = PREFIX + "setrole";
 
-
+    private void addURl(Model m) {
+        m.addAttribute("REG", REG);
+        m.addAttribute("LIST", LIST);
+        m.addAttribute("SAVE", SAVE);
+        m.addAttribute("REMOVE", REMOVE);
+        m.addAttribute("UPDATA", UPDATA);
+        m.addAttribute("RESETPWD", RESETPWD);
+        m.addAttribute("SETROLE", SETROLE);
+    }
 
     @Autowired
     UserRepository userRepository;
@@ -49,6 +63,7 @@ public class UserController {
      */
     @PostMapping(REG)
     public String reg(@Valid SysUser user, Model m) throws Exception {
+        addURl(m);
         //Set<Long> roleIds = Arrays.stream(roles).map(Long::valueOf).collect(Collectors.toSet());
         //Set<Role> roleSet = roleRepository.findAll(roleIds).stream().collect(Collectors.toSet());
         if (user != null && !user.getUsername().trim().equals("")) {
@@ -72,12 +87,14 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/userList")
-    @RequiresPermissions("userInfo:view")//权限管理;
-    public String userInfo(Model m) {
+    @RequestMapping(LIST)
+//    @RequiresPermissions("userInfo:view")//权限管理;
+    @RequiresPermissions(LIST)//权限管理;
+    public String userList(Model m) {
+        addURl(m);
         List<SysUser> all = userRepository.findAll();
         m.addAttribute("userlist", all);
-        return "user/userlist";
+        return "sys/user/userlist";
     }
 
     /**
@@ -85,9 +102,11 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping("/userAdd")
-    @RequiresPermissions("userInfo:add")//权限管理;
-    public String userInfoAdd() {
+    @GetMapping(SAVE)
+//    @RequiresPermissions("userInfo:add")//权限管理;
+    @RequiresPermissions(SAVE)//权限管理;
+    public String userInfoAdd(Model m) {
+        addURl(m);
         //使用用户管理员（具有该权限的）直接添加用户
         return PREFIX + "useradd";
     }
@@ -97,9 +116,10 @@ public class UserController {
      *
      * @return
      */
-    @PostMapping("/userAdd")
-    @RequiresPermissions("userInfo:add")//权限管理;
+    @PostMapping(SAVE)
+    @RequiresPermissions(SAVE)//权限管理;
     public String userInfoAdd(SysUser user, Model m) throws Exception {
+        addURl(m);
         if (Objects.nonNull(user) && !"".equals(user.getUsername().trim()) && Objects.nonNull(user.getState()) && !"".equals(user.getPassword().trim()) && !"".equals(user.getName().trim())) {
             sysUserService.save(user);
         }
@@ -113,13 +133,15 @@ public class UserController {
      * @param m
      * @return
      */
-    @GetMapping("/userUpdata")
+    @GetMapping(UPDATA)
+    @RequiresPermissions(UPDATA)//权限管理;
     public String userUpdata(Long id, Model m) {
+        addURl(m);
         SysUser sysUser = null;
         if (Objects.nonNull(id))
             sysUser = userRepository.getOne(id);
         m.addAttribute("user", sysUser);
-        return "user/userupdata";
+        return "sys/user/userupdata";
     }
 
     /**
@@ -128,8 +150,10 @@ public class UserController {
      * @param user 更新后的user
      * @return
      */
-    @PostMapping("/userUpdata")
-    public String userUpdata(SysUser user) throws Exception {
+    @PostMapping(UPDATA)
+    @RequiresPermissions(UPDATA)//权限管理;
+    public String userUpdata(Model m, SysUser user) throws Exception {
+        addURl(m);
         if (Objects.nonNull(user) && Objects.nonNull(user.getId())) {
             SysUser dbuser = userRepository.getOne(user.getId());
             dbuser.setName(user.getName());
@@ -151,8 +175,9 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping("/del")
-    @RequiresPermissions("userInfo:del")//权限管理;
+    @RequestMapping(REMOVE)
+    @RequiresPermissions(REMOVE)//权限管理;
+//    @RequiresPermissions("userInfo:del")//权限管理;
     public String userDel(Long id) {
         userRepository.deleteById(id);
         return "redirect:userList";
@@ -165,7 +190,8 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @GetMapping("/resetpwd")
+    @GetMapping(RESETPWD)
+    @RequiresPermissions(RESETPWD)//权限管理;
     public String resetpwd(Long id) throws Exception {
         SysUser user = userRepository.getOne(id);
         user.setPassword(restpwd);
@@ -180,8 +206,10 @@ public class UserController {
      * @param m
      * @return
      */
-    @GetMapping("role")
+    @GetMapping(SETROLE)
+    @RequiresPermissions(SETROLE)//权限管理;
     public String getRole(Long id, Model m) {
+        addURl(m);
         //获取所有角色
         if (Objects.nonNull(id) && id > 0) {
             List<SysRole> allrole = roleRepository.findAll();
@@ -218,7 +246,8 @@ public class UserController {
      * @param rids
      * @return
      */
-    @PostMapping("role")
+    @PostMapping(SETROLE)
+    @RequiresPermissions(SETROLE)//权限管理;
     public String setRole(Long id, Long[] rids) {
         if (rids != null && rids.length > 0) {
             List<SysRole> roles = roleRepository.findAllById(Arrays.asList(rids));
@@ -230,6 +259,5 @@ public class UserController {
         }
         return "redirect:role?id=" + id;
     }
-
 
 }

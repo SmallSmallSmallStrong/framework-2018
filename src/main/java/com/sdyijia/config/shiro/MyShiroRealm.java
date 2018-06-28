@@ -40,7 +40,7 @@ public class MyShiroRealm extends AuthorizingRealm {
                 authorizationInfo.addRole(role.getCode());
                 for (SysPermission p : role.getPermissions()) {
                     //为用户设置权限
-                    authorizationInfo.addStringPermission(p.getPermission());
+                    authorizationInfo.addStringPermission(p.getUrl());
                 }
             }
         } else throw new AuthorizationException();

@@ -1,68 +1,18 @@
 <!DOCTYPE html>
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-transitional-thymeleaf-4.dtd">
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-frameset-thymeleaf-4.dtd">
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-4.dtd">
+<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">-->
+<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-transitional-thymeleaf-4.dtd">-->
+<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-frameset-thymeleaf-4.dtd">-->
+<!--<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-4.dtd">-->
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="~{base/header::header2(~{::title},~{::link},~{})}">
     <meta charset="UTF-8">
     <title>角色权限配置列表</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        #tableDiv {
-            margin: 0 auto;
-        }
-
-        #tableDiv tr {
-            width: 1200px;
-            display: block;
-        }
-
-        #tableDiv tr td {
-            width: 198px;
-            text-align: center;
-            border: 1px solid #ccc;
-        }
-
-        #tableDiv tr td .tdDiv {
-            width: 151px;
-            display: flex;
-            align-items: center;
-            text-align: left;
-            justify-content: center;
-            margin-left: 15px;;
-            position: relative;
-        }
-
-        #tableDiv tr td .tdDiv input {
-            position: absolute;
-            left: 15px;
-        }
-
-        #tableDiv tr td .tdDiv label {
-            width: 130px;
-            margin-left: 30px;
-        }
-
-        #tableDiv tr th {
-            display: block;
-            border: 1px solid #ccc;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sys/role/rolepremission.html.css}"  />
 </head>
 <body>
-
-<a href="../login">主页</a>
-
-
-<form th:action="@{'permission'}" th:method="post">
-    <table border="0" cellspacing="0" cellpadding="0" id="tableDiv">
+<form th:action="@{${SAVE_ROLE_PERMISSION_URL}}" th:method="post" >
+    <table id="tableDiv"  border="0" cellspacing="0" cellpadding="0"  class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" >
     </table>
 </form>
 </body>
@@ -109,7 +59,7 @@
     }
     $("#tableDiv ").append(html);
     $("#tableDiv ").append('<input type="hidden" name="roleId"  value="' + role.id + '">');
-    $("#tableDiv ").append('<input type="submit"  value="保存">');
+    $("#tableDiv ").append('<input type="submit" class="btn btn-primary radius" style="margin:5px 0 0 5px"   value="保存">');
     $("#tableDiv tr td:even").css("background", "#cbeaf9");
 </script>
 </html>

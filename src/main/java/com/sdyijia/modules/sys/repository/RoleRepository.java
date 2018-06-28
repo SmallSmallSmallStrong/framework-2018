@@ -10,4 +10,6 @@ public interface RoleRepository extends JpaRepository<SysRole, Long> {
     SysRole findByCode(String code);
 
     List<SysRole> findAllByNameLike(String name);
+
+    void deleteAllById(Iterable<Long> var1);
 }

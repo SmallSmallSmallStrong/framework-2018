@@ -13,7 +13,7 @@ public class SysRole extends Base {
     @Column(unique = true)
     private String code; // 角色标识程序中判断使用,如"admin",这个是唯一的:
     private String name; // 汉字名
-    private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户
+    private Boolean available = Boolean.TRUE; // 是否可用,如果不可用将不会添加给用户
 
     //角色 -- 权限关系：多对多关系;默认不进行级联操作
     @ManyToMany(fetch = FetchType.EAGER)

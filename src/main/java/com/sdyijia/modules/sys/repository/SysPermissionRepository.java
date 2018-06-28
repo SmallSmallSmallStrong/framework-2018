@@ -9,10 +9,14 @@ import java.util.List;
 
 public interface SysPermissionRepository extends JpaRepository<SysPermission, Long> {
 
-    List<SysPermission> findAllByParentIdAndNameOrderByIdAsc(Long id, String name, Pageable pageable);
+    List<SysPermission> findAllByParentIdAndNameLikeOrderByIdAsc(Long id, String name, Pageable pageable);
 
     List<SysPermission> findAllByLevel(Integer level, Sort sort);
 
+    List<SysPermission> findAllByAvailableTrue();
+
     void deleteAllByParentId(Long parentId);
+
+
 
 }

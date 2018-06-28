@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<head th:insert="~{base/header::header2(~{::title},~{},~{})}">
     <title>角色添加</title>
+    <!--<link rel="stylesheet" th:href="@{}">-->
 </head>
 <body>
-<a href="../login">主页</a>
-<form th:action="@{roleadd}" th:method="post">
-    角色名<input type="text" th:name="role">
-    角色描述<input type="text" th:name="description">
-    是否可用&nbsp;&nbsp;<input th:type="checkbox" th:name="available" th:value="true">可用
-    <input th:type="checkbox" th:name="available" th:value="false">不可用
-    <input th:type="reset" type="reset" th:value="重置">
-    <input th:type="submit" th:value="提交">
+<form style="text-align:center;" th:action="@{${SAVE_URL}}" th:method="post" class="form" enctype="multipart/form-data">
+    <label class="form-label">code</label>
+    <input class="input-text" style="width: 200px" type="text" th:name="code">
+
+    <label class="form-label">角色名</label>
+    <input class="input-text" style="width: 200px" type="text" th:name="name">
+
+    <label class="form-label">角色描述</label>
+    <input class="input-text" style="width: 200px" type="text" th:name="remark">
+
+    <div>
+        <label class="form-label">是否可用&nbsp;&nbsp;</label>
+        <input th:type="radio" th:id="isok" th:name="available" th:value="true" th:checked="true">
+        <label th:for="isok">可用</label>
+        <input th:type="radio" th:id="isno" th:name="available" th:value="false">
+        <label th:for="isno">不可用</label>
+    </div>
+
+    <input th:type="submit" class="btn btn-primary radius" style="margin:5px 0 0 5px" th:value="提交">
+    <input th:type="reset" class="btn btn-default radius" style="margin:5px 0 0 5px" th:value="重置">
 </form>
 </body>
 </html>
