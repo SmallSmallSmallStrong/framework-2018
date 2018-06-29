@@ -6,11 +6,14 @@ import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -48,7 +51,7 @@ public class ShiroConfiguration {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/sys/error/500");
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
@@ -85,6 +88,30 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
+
+    /**
+     * 开启springboot注解
+     * @param securityManager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+        System.out.println("开启了Shiro注解支持");
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        System.out.println("将spring aop 交给shiro管理");
+        DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
+        defaultAAP.setProxyTargetClass(true);
+        return defaultAAP;
+    }
+
+
 
     @Bean
     public SecurityManager securityManager() {

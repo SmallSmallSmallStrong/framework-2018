@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"  >
 <head th:insert="~{base/header::header}">
     <meta charset="UTF-8">
 </head>
 <body>
 
 <!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
+
+<shiro:hasPermission th:name = "${function.url}">
 <div class="cl pd-5 bg-1 bk-gray  ">
     <div th:class="l">
         <a href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
@@ -14,6 +16,7 @@
         </a>
     </div>
 </div>
+</shiro:hasPermission>
 <table class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" border="1" cellspacing="0">
     <tr>
         <th style="width: 10%;">排序</th>

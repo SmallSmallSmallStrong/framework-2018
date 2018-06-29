@@ -3,6 +3,7 @@ package com.sdyijia.config.shiro;
 import com.sdyijia.modules.sys.bean.SysPermission;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
+import com.sdyijia.modules.sys.repository.SysPermissionRepository;
 import com.sdyijia.modules.sys.repository.UserRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -13,14 +14,18 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class MyShiroRealm extends AuthorizingRealm {
     private static final Logger logger = Logger.getLogger("MyShiroRealm");
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SysPermissionRepository sysPermissionRepository;
 
     /**
      * 权限的授权
@@ -38,9 +43,15 @@ public class MyShiroRealm extends AuthorizingRealm {
             for (SysRole role : userInfo.getRoleList()) {
                 //在此处为用户设置角色
                 authorizationInfo.addRole(role.getCode());
-                for (SysPermission p : role.getPermissions()) {
-                    //为用户设置权限
-                    authorizationInfo.addStringPermission(p.getUrl());
+                if ("admin".equals(userInfo.getUsername())) {//判断用户是否是admin
+                    List<SysPermission> list = sysPermissionRepository.findAllByAvailableTrue();
+                    List<String> strlist = list.stream().map(s -> s.getUrl()).collect(Collectors.toList());
+                    authorizationInfo.addStringPermissions(strlist);
+                } else {//不是 admin 则查询改用户的角色对应的权限
+                    for (SysPermission p : role.getPermissions()) {
+                        //为用户设置权限
+                        authorizationInfo.addStringPermission(p.getUrl());
+                    }
                 }
             }
         } else throw new AuthorizationException();

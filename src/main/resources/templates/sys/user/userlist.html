@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head th:insert="~{base/header::header2(~{::title},~{},~{})}">
     <meta charset="UTF-8">
     <title>用户列表</title>
 </head>
 <body>
 <!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
-
-
 <div class="cl pd-5 bg-1 bk-gray  ">
     <div th:class="l">
-        <a href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
+        <a shiro:hasPermission="${SAVE}" href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
            th:onclick="'javascript:add(\'添加\', \''+ @{${SAVE}} + '\')'">
             <i class="Hui-iconfont">&#xe600;</i>添加
         </a>
     </div>
 </div>
-
-
 <table class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" border="1"
        cellspacing="1">
     <tr>
@@ -37,7 +33,8 @@
         <td th:text="${user.state}"></td>
         <td>
             <!--<a th:onclick="javascript:manageConfirm('\'' + @{${REMOVE}(id=${user.id})} + '\'','确认删除?')" th:href="@{${REMOVE}(id=${user.id})}">删除</a>-->
-            <a th:onclick="'javascript:manageConfirm(\''+ @{${REMOVE}(id=${user.id})} + '\',\'确认删除?\')'"  href="javascript:void(0);">删除</a>
+            <a th:onclick="'javascript:manageConfirm(\''+ @{${REMOVE}(id=${user.id})} + '\',\'确认删除?\')'"
+               href="javascript:void(0);">删除</a>
             <a th:href="@{${SETROLE}(id=${user.id})}">角色</a>
             <a th:href="@{${RESETPWD}(id=${user.id})}">重置密码</a>
             <a th:href="@{${UPDATA}(id=${user.id})}">修改信息</a>
