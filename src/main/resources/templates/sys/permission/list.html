@@ -27,7 +27,6 @@
     </tr>
     <tr th:each="func , stat : ${functionlist}">
         <td th:text="${func.sort}"></td>
-
         <td th:if="${func.getAvailable() eq true}" th:text="可用"></td>
         <td th:if="${func.getAvailable() eq false}" th:text="废弃"></td>
         <td th:if="${func.getAvailable() != false && func.getAvailable() != true}" th:text="未知"></td>

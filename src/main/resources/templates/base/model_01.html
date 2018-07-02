@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head th:insert="~{base/header::header2(title,links,styles)}">
+<head th:insert="~{base/header::header2(~{::title},~{::link},~{::style})}">
     <title></title>
     <link rel="stylesheet" th:href="@{/css/default.css}"/>
     <style>
