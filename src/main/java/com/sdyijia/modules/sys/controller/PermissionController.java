@@ -9,17 +9,15 @@ import com.sdyijia.utils.tool.ToolStr;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +83,7 @@ public class PermissionController extends SysController {
         m.addAttribute("name", name);
         m.addAttribute("parentId", parentId);
         addURL(m);
-        return LIST_URL;
+        return "sys/permission/list";
     }
 
     @RequestMapping(MODIFY_URL)
@@ -106,7 +104,7 @@ public class PermissionController extends SysController {
             }
         }
         addURL(m);
-        return PERMISSION_URL_PREFIX + "/permadd";
+        return "sys/permission/permadd";
     }
 
     @RequestMapping(SAVE_URL)
@@ -114,6 +112,8 @@ public class PermissionController extends SysController {
     public String save(HttpServletRequest request, @NonNull SysPermission sysPermission) {
         if (sysPermission != null && sysPermission.getId() == null
                 && sysPermission.getSort() != null && sysPermission.getResourceType() != null) {
+            sysPermission.setCreatedTime(new Date());
+            sysPermission.setUpdataTime(new Date());
             if (sysPermission.getParent() != null && sysPermission.getParent().getId() != null) {
                 SysPermission dbParentPer = permissionRepository.getOne(sysPermission.getParent().getId());
                 sysPermission.setLevel(dbParentPer.getLevel() + 1);
@@ -150,6 +150,7 @@ public class PermissionController extends SysController {
             dbPermission.setAvailable(sysPermission.getAvailable());
             dbPermission.setShowLeft(sysPermission.getShowLeft());
             //更新页面传过来的更新
+            dbPermission.setUpdataTime(new Date());
             sysPermissionRepository.save(dbPermission);
             if (dbPermission.getParent() != null) {
                 return BaseController.REDIRECT + LIST_URL + "?parentId=" + dbPermission.getParent().getId();

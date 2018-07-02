@@ -77,6 +77,8 @@ public class UserController extends SysController {
             return "base/error";
         }
         user.setState((byte) 0);
+        user.setUpdataTime(new Date());
+        user.setCreatedTime(new Date());
         sysUserService.save(user);
         return "redirect:/login";
     }
@@ -120,7 +122,10 @@ public class UserController extends SysController {
     @RequiresPermissions(SAVE)//权限管理;
     public String userInfoAdd(SysUser user, Model m) throws Exception {
         addURl(m);
-        if (Objects.nonNull(user) && !"".equals(user.getUsername().trim()) && Objects.nonNull(user.getState()) && !"".equals(user.getPassword().trim()) && !"".equals(user.getName().trim())) {
+        if (Objects.nonNull(user) && !"".equals(user.getUsername().trim()) && Objects.nonNull(user.getState())
+                && !"".equals(user.getPassword().trim()) && !"".equals(user.getName().trim())) {
+            user.setUpdataTime(new Date());
+            user.setCreatedTime(new Date());
             sysUserService.save(user);
         }
         return "redirect:userList";
@@ -158,6 +163,7 @@ public class UserController extends SysController {
             SysUser dbuser = userRepository.getOne(user.getId());
             dbuser.setName(user.getName());
             dbuser.setState(user.getState());
+            dbuser.setUpdataTime(new Date());
             if (user.getSalt() != null && !user.getSalt().trim().equals("") && Objects.nonNull(user.getPassword()) && !user.getPassword().trim().equals("")) {
                 dbuser.setSalt(user.getSalt());
                 dbuser.setPassword(user.getPassword());
@@ -195,6 +201,7 @@ public class UserController extends SysController {
     public String resetpwd(Long id) throws Exception {
         SysUser user = userRepository.getOne(id);
         user.setPassword(restpwd);
+        user.setUpdataTime(new Date());
         sysUserService.save(user);
         return "redirect:userList";
     }
@@ -255,6 +262,7 @@ public class UserController extends SysController {
             tmp.addAll(roles);
             SysUser user = userRepository.getOne(id);
             user.setRoleList(tmp);
+            user.setUpdataTime(new Date());
             userRepository.save(user);
         }
         return "redirect:role?id=" + id;

@@ -7,7 +7,7 @@
 
 <!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
 
-<shiro:hasPermission th:name = "${function.url}">
+<shiro:hasPermission th:name = "${SAVE_URL}">
 <div class="cl pd-5 bg-1 bk-gray  ">
     <div th:class="l">
         <a href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"

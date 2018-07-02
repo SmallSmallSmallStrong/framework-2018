@@ -5,6 +5,7 @@ import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
 import com.sdyijia.modules.sys.repository.SysPermissionRepository;
 import com.sdyijia.modules.sys.repository.UserRepository;
+import com.sdyijia.utils.tool.ToolStr;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
@@ -45,12 +46,13 @@ public class MyShiroRealm extends AuthorizingRealm {
                 authorizationInfo.addRole(role.getCode());
                 if ("admin".equals(userInfo.getUsername())) {//判断用户是否是admin
                     List<SysPermission> list = sysPermissionRepository.findAllByAvailableTrue();
-                    List<String> strlist = list.stream().map(s -> s.getUrl()).collect(Collectors.toList());
+                    List<String> strlist = list.stream().map(s -> s.getUrl()).filter(str -> !ToolStr.isEmpty(str)).collect(Collectors.toList());
                     authorizationInfo.addStringPermissions(strlist);
                 } else {//不是 admin 则查询改用户的角色对应的权限
                     for (SysPermission p : role.getPermissions()) {
                         //为用户设置权限
-                        authorizationInfo.addStringPermission(p.getUrl());
+                        if (!ToolStr.isEmpty(p.getUrl()))
+                            authorizationInfo.addStringPermission(p.getUrl());
                     }
                 }
             }

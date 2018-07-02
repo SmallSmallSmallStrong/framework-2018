@@ -118,6 +118,7 @@ public class RoleController {
                 dbrole.setAvailable(role.getAvailable());
                 dbrole.setRemark(role.getRemark());
                 dbrole.setName(role.getName());
+                dbrole.setUpdataTime(new Date());
                 roleRepository.save(dbrole);
             }
         }
@@ -176,7 +177,6 @@ public class RoleController {
         if (Objects.nonNull(roleId)) {
             SysRole role = roleRepository.getOne(roleId);
             List<SysPermission> permissions = sysPermissionRepository.findAllById(Arrays.asList(permissionId));
-            System.out.println(Arrays.toString(permissionId));
             role.setPermissions(permissions);
             roleRepository.save(role);
         }
@@ -188,13 +188,15 @@ public class RoleController {
     @RequiresPermissions(SAVE_URL)
     public String toSave(Model m) {
         addURL(m);
-        return "/sys/role/roleadd";
+        return "sys/role/roleadd";
     }
 
     @PostMapping(SAVE_URL)
     @RequiresPermissions(SAVE_URL)
     public String save(SysRole sysRole) {
 //        addURL(m);
+        sysRole.setUpdataTime(new Date());
+        sysRole.setCreatedTime(new Date());
         roleRepository.saveAndFlush(sysRole);
         return BaseController.REDIRECT + LIST_URL;
     }
