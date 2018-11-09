@@ -57,6 +57,4 @@ public abstract class BaseService<D extends CrudRepository<T, Long>, T extends B
         return repository;
     }
 
-
-
 }

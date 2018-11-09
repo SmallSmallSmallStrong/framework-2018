@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Service("permissionService")
 public class PermissionService extends BaseService<SysPermissionRepository, SysPermission> {
