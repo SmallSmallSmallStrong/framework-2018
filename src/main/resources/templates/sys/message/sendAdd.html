@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{base/header::header2(~{::title},~{},~{::style})}" >
+    <meta charset="UTF-8">
+    <title>个人更新</title>
+    <style>
+        .with {
+            width: 200px
+        }
+    </style>
+</head>
+<body>
+<!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
+<form style="text-align:center;" action="/sys/message/sendto" th:method="post">
+
+    <label class="form-label col-xs-3">邮箱:</label>
+    <div class="formControls col-xs-8">
+    <input type="text" class="input-text vail" th:name="email" id="email">
+
+    </div>
+
+    <label class="form-label col-xs-3">主题:</label>
+    <div class="formControls col-xs-8">
+    <input type="text" class="input-text" th:name="name" id="username">
+    </div>
+
+    <label class="form-label col-xs-3">内容：</label>
+     <div class="formControls col-xs-8">
+    <input type="text"class="input-text" th:name="content" id="content">
+     </div>
+
+
+
+
+    <label class="form-label col-xs-3"></label>
+    <div class="formControls col-xs-8">
+    <input class="btn btn-primary radius" type="submit" style="margin:5px 0 0 5px" th:value="发送">
+    <input class="btn btn-default radius" type="reset"  style="margin:5px 0 0 5px" th:value="撤销">
+    </div>
+</form>
+</body>
+</html>

@@ -1,12 +1,18 @@
 package com.sdyijia.modules.sys.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.sdyijia.exception.SaveException;
+import com.sdyijia.modules.sys.bean.Message;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
+import com.sdyijia.modules.sys.repository.MessageRepository;
 import com.sdyijia.modules.sys.repository.RoleRepository;
 import com.sdyijia.modules.sys.repository.UserRepository;
 import com.sdyijia.modules.sys.service.SysUserService;
+import com.sdyijia.utils.ECS.EncryptionUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -29,6 +36,10 @@ public class UserController extends SysController {
     private final String UPDATA = PREFIX + "up";
     private final String RESETPWD = PREFIX + "resetpwd";
     private final String SETROLE = PREFIX + "setrole";
+    private final String PEOPLE = PREFIX + "peo";
+    private final String PSAVE = PREFIX + "ps";
+    private final String MODIFYPASSWORDFORM = PREFIX + "mpw";
+    private final String MODIFYPASSWORD = PREFIX + "modifypw";
 
     private void addURl(Model m) {
         m.addAttribute("REG", REG);
@@ -38,8 +49,14 @@ public class UserController extends SysController {
         m.addAttribute("UPDATA", UPDATA);
         m.addAttribute("RESETPWD", RESETPWD);
         m.addAttribute("SETROLE", SETROLE);
+        m.addAttribute("PEOPLE", PEOPLE);
+        m.addAttribute("PSAVE", PSAVE);
+        m.addAttribute("MODIFYPASSWORDFORM", MODIFYPASSWORDFORM);
+
     }
 
+    @Autowired
+    MessageRepository messageRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -49,6 +66,11 @@ public class UserController extends SysController {
     @Value("${reset_password}")
     private String restpwd;
 
+    private String pwd;
+
+  /*  private String pass;
+    @Value(pass)
+    private String newPassword;*/
 
     @GetMapping(REG)
     public String reg() {
@@ -83,6 +105,79 @@ public class UserController extends SysController {
         return "redirect:/login";
     }
 
+    /**
+     *个人信息
+     *
+     * @return
+     */
+    @GetMapping(PEOPLE)
+    @RequestMapping(PEOPLE)
+    public String peo(Model m) {
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysuser = (SysUser) currentUser.getPrincipal();//获取用户
+        SysUser sysuserr = userRepository.getOne(sysuser.getId());
+        m.addAttribute("sysu", sysuserr);
+        return "sys/user/people";
+    }
+    /**
+     * 个人信息修改.
+     *
+     * @return
+     */
+    @PostMapping(PSAVE)
+    @RequestMapping(PSAVE)
+    public String ps(SysUser sysu, Model m){
+        addURl(m);
+        if (Objects.nonNull(sysu) && Objects.nonNull(sysu.getUsername())) {
+            SysUser dbuser = userRepository.findByUsername(sysu.getUsername());
+            dbuser.setName(sysu.getName());
+            dbuser.setUpdataTime(new Date());
+            dbuser.setRemark(sysu.getRemark());
+            userRepository.save(dbuser);
+
+        }
+        return "redirect:peo";
+    }
+    /**
+     * 修改密码页面.
+     *
+     * @return
+     */
+    @RequestMapping(MODIFYPASSWORDFORM)
+    public String mpw(Model m){
+        Subject currentUser = SecurityUtils.getSubject();
+        SysUser sysuser = (SysUser) currentUser.getPrincipal();//获取用户
+        SysUser sysuserr = userRepository.getOne(sysuser.getId());
+        m.addAttribute("sysu", sysuserr);
+        return "sys/user/modifyPassword";
+    }
+
+    /**
+     * 修改密码.
+     *
+     * @return
+     */
+    @PostMapping(MODIFYPASSWORD)
+    @RequestMapping(MODIFYPASSWORD)
+    public String modifypw(SysUser sysu,Model m){
+         addURl(m);
+        String salt = "";
+         SysUser user = userRepository.findByUsername(sysu.getUsername());
+
+             if (Objects.nonNull(user) && Objects.nonNull(user.getSalt()) && !"".equals(user.getSalt().trim()))
+                 salt = user.getSalt();
+             if (salt != null && !salt.trim().equals("")) {
+                 pwd = EncryptionUtils.getSha512Hash(sysu.getPassword());
+             }else {
+                 pwd = EncryptionUtils.getSha512Hash(sysu.getPassword());
+             }
+             user.setPassword(pwd);
+             user.setUpdataTime(new Date());
+             userRepository.save(user);
+
+        return "redirect:mpw";
+    }
+
 
     /**
      * 用户查询.
@@ -98,6 +193,8 @@ public class UserController extends SysController {
         m.addAttribute("userlist", all);
         return "sys/user/userlist";
     }
+
+
 
     /**
      * 用户添加;

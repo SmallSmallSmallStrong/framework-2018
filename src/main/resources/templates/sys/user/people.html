@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{base/header::header2(~{::title},~{},~{::style})}" >
+    <meta charset="UTF-8">
+    <title>个人更新</title>
+    <style>
+        .with {
+            width: 200px
+        }
+    </style>
+</head>
+<body>
+<!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
+<form style="text-align:center;" action="/sys/user/ps" th:method="post">
+    <input th:name="id" type="hidden" th:value="${sysu.id}">
+    <label class="form-label">用户名:</label>
+    <input type="text" class="input-text with" th:name="username" id="username" th:value="${sysu.username}" readonly="readonly">
+
+
+    <label class="form-label">昵 称 ：</label>
+    <input type="text"class="input-text with" th:name="name" id="name"  th:value="${sysu.name}">
+
+    <label class="form-label">备注：</label>
+    <input type="text" class="input-text with" th:name="remark" id="remark" th:value="${sysu.remark}">
+
+
+   <label class="form-label">  </label>
+
+    <input class="btn btn-primary radius" type="submit" style="margin:5px 0 0 5px" th:value="修改">
+    <input class="btn btn-default radius" type="reset"  style="margin:5px 0 0 5px" th:value="撤销">
+
+</form>
+</body>
+</html>

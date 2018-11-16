@@ -104,7 +104,7 @@ public class MainController {
         if (Objects.nonNull(dbuser) && Objects.nonNull(dbuser.getSalt()) && !"".equals(dbuser.getSalt().trim()))
             salt = dbuser.getSalt();
         //如果掩码为空使用的是EncryptionUtils类的常量salt
-        if (salt != null && !salt.trim().equals("")) {
+       if (salt != null && !salt.trim().equals("")) {
             pwd = EncryptionUtils.getSha512Hash(user.getPassword(), salt);
         } else {
             pwd = EncryptionUtils.getSha512Hash(user.getPassword());

@@ -16,7 +16,7 @@ public class SysUser extends Base {
     private String username;//帐号
     private String name;//名称（昵称或者真实姓名，不同系统不同定义）
     private String password; //密码;
-
+    private String remark;  //备注;
     /**
      * 加密密码的盐。
      * 默认使用util包EncryptionUtils类的一个常量来做盐，使用该常量时该属性仍为空。
@@ -97,4 +97,8 @@ public class SysUser extends Base {
     public void setRoleList(List<SysRole> roleList) {
         this.roleList = roleList;
     }
+
+    public String getRemark() { return remark;}
+
+    public void setRemark(String remark) {this.remark = remark;}
 }

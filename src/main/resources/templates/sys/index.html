@@ -23,8 +23,9 @@
                             <i class="Hui-iconfont">&#xe6d5;</i>
                         </a>
                         <ul class="dropDown-menu menu radius box-shadow">
-                            <li><a href="#">个人信息</a></li>
-                            <li><a onclick="changeIframe('修改密码', '${ctx }${restpwd }?id=${sessionUser.id }');"
+                            <li><a onclick="add('个人信息', '/sys/user/peo');"
+                                href="javascript:void(0);">个人信息</a></li>
+                            <li><a onclick="changeIframe('修改密码', '/sys/user/mpw');"
                                    href="javascript:void(0);">修改密码</a></li>
                             <li><a th:href="@{/logout}">退出</a></li>
                         </ul>
@@ -32,7 +33,7 @@
                         <input id="mainMsgInput" type="hidden" value="-1"/>
                     </li>
                     <li id="Hui-msg">
-                        <a href="javascript:;" title="消息">
+                        <a title="消息" href="javascript:void(0);" onclick="add('消息', '/sys/message/msgList');">
                             <span id="mainMsg" class="badge badge-danger"></span>
                             <i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i>
                         </a>

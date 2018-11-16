@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head th:insert="~{base/header::header2(~{::title},~{},~{})}">
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+<div class="cl pd-5 bg-1 bk-gray  ">
+    <div th:class="l">
+        <a shiro:hasPermission="${SEND}" href="javascript:;" class="btn btn-primary radius" style="margin:5px 0 0 5px"
+           th:onclick="'javascript:add(\'添加\', \''+ @{${SEND}} + '\')'">
+            <i class="Hui-iconfont">&#xe600;</i>发送消息
+        </a>
+    </div>
+</div>
+<!--重新登录时会判断当前用户是否登录如果已经登录则返回主页否则返回登录页-->
+
+<table class="table table-border table-hover table-bg table-sort " style="min-width: 600px;" border="1"
+       cellspacing="1">
+    <tr>
+        <th style="width: 10%;">属性</th>
+        <th style="width: 10%;">主题</th>
+        <th style="width: 10%;">时间</th>
+        <th style="width: 10%;">发件地址</th>
+        <th style="width: 10%;">收件地址</th>
+        <th style="width: 10%;">内容</th>
+        <th style="width: 10%;">消息状态</th>
+        <th style="width: 10%;">操作</th>
+    </tr>
+
+    <tr th:each="msg,index:${msglist}">
+        <td th:text="${msg==null?'':msg.belong=='1'?'发件':'收件'}"></td>
+        <td th:text="${msg==null?'':msg.name}"></td>
+        <td th:text="${msg==null?'':msg.createdTime}"></td>
+        <td th:text="${msg==null?'':msg.send}"></td>
+        <td th:text="${msg==null?'':msg.lz}"></td>
+        <td th:text="${msg==null?'':msg.content}"></td>
+        <td th:text="${msg==null?'':msg.state=='1'?'已读':'未读'}"></td>
+
+
+        <td>
+            <a th:href="@{${STA}(id=${msg.id})}">已读</a>
+            <a th:onclick="'javascript:manageConfirm(\''+ @{${REMOVE}(id=${msg.id})} + '\',\'确认删除?\')'"
+               href="javascript:void(0);">删除</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
