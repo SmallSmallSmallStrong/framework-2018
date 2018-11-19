@@ -7,6 +7,8 @@
     ToolStr.captureNametoUp:首字母大写<BR>
     ToolStr.captureNametoLow:首字母小写<BR>
 更新数据库位置到112<BR>
+添加redis版本2.0.7,配置在application-dev.properties,
+配置文件在:com.sdyijia.config.redis.RedisConfig.java
     
 2018.11.09更新<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;1.在BaseController添加重定向方法，添加url方法<br/>
