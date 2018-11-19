@@ -1,6 +1,6 @@
 package com.sdyijia.modules.sys.controller;
 
-import com.sdyijia.modules.base.BaseController;
+import com.sdyijia.modules.base.controller.BaseController;
 
 public abstract  class SysController  extends BaseController {
 

@@ -2,7 +2,6 @@ package com.sdyijia.modules.sys.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.sdyijia.exception.SaveException;
-import com.sdyijia.modules.sys.bean.Message;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.bean.SysUser;
 import com.sdyijia.modules.sys.repository.MessageRepository;

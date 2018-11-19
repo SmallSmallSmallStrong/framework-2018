@@ -1,4 +1,4 @@
-package com.sdyijia.modules.base;
+package com.sdyijia.modules.base.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;

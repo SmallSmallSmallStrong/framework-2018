@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-public class Message extends Base {
+public class SysMessage extends Base {
 
     private String name;
     private String content;

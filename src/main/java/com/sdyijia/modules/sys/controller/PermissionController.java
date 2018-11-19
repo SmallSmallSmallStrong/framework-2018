@@ -1,7 +1,7 @@
 package com.sdyijia.modules.sys.controller;
 
 import com.sdyijia.exception.SaveException;
-import com.sdyijia.modules.base.BaseController;
+import com.sdyijia.modules.base.controller.BaseController;
 import com.sdyijia.modules.sys.bean.SysPermission;
 import com.sdyijia.modules.sys.repository.SysPermissionRepository;
 import com.sdyijia.modules.sys.service.PermissionService;

@@ -1,6 +1,6 @@
 package com.sdyijia.modules.sys.controller;
 
-import com.sdyijia.modules.sys.bean.Message;
+import com.sdyijia.modules.sys.bean.SysMessage;
 import com.sdyijia.modules.sys.repository.UserRepository;
 import com.sdyijia.modules.sys.repository.MessageRepository;
 import com.sdyijia.modules.sys.service.MessageService;
@@ -74,7 +74,7 @@ public class MessageController extends SysController{
     @GetMapping(LIST)
     public String msgList(Model m){
         addURl(m);
-        List<Message> msg=messageRepository.findAll();
+        List<SysMessage> msg=messageRepository.findAll();
         m.addAttribute("msglist",msg);
 
        return "sys/message/list";
@@ -99,7 +99,7 @@ public class MessageController extends SysController{
     @RequestMapping(STA)
     @GetMapping(STA)
     public String sta(Long id) {
-        Message msg=messageRepository.getOne(id);
+        SysMessage msg=messageRepository.getOne(id);
         msg.setState("1");
         messageRepository.save(msg);
         return "redirect:msgList";
@@ -129,7 +129,7 @@ public class MessageController extends SysController{
         addURl(m);
         try {
             sendEmail(email, name, content); //发送邮件
-            Message msg=new Message();
+            SysMessage msg=new SysMessage();
             msg.setState("0");
             msg.setBelong("1");
             msg.setSend(myEmailAccount);

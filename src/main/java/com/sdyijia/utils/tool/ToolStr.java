@@ -7,7 +7,7 @@ public class ToolStr {
 
     /**
      * 判断str是不是null，如果是null或者是空格返回true，否则返回false
-     * 
+     *
      * @param str
      * @return
      */
@@ -21,7 +21,7 @@ public class ToolStr {
 
     /**
      * 判断objs数组是不是null，如果是null或者是空格返回true，否则返回false
-     * 
+     *
      * @param objs
      * @return
      */
@@ -32,10 +32,10 @@ public class ToolStr {
             return false;
         }
     }
-    
+
     /**
      * 判断obj是不是null，如果是null或者是空格返回true，否则返回false
-     * 
+     *
      * @param obj
      * @return
      */
@@ -46,15 +46,15 @@ public class ToolStr {
             return false;
         }
     }
-    
+
     /**
      * 判断map是不是null，如果是null或者是空格返回true，否则返回false
-     * 
+     *
      * @param map
      * @return
      */
-    public static boolean isEmpty(Map<?,?> map) {
-        if (map == null ||map.size()<=0) {
+    public static boolean isEmpty(Map<?, ?> map) {
+        if (map == null || map.size() <= 0) {
             return true;
         } else {
             return false;
@@ -63,7 +63,7 @@ public class ToolStr {
 
     /**
      * 判断Collection容器是不是null，如果是null或者是空格返回true，否则返回false
-     * 
+     *
      * @param collection
      * @return
      */
@@ -77,7 +77,7 @@ public class ToolStr {
 
     /**
      * 判断传入的字符串的第一个字母，如果是大写转为小写，如果不是返回原字符串。
-     * 
+     *
      * @param code
      * @return
      */
@@ -94,9 +94,8 @@ public class ToolStr {
 
     /**
      * 将字符串表示的整型数据转化为int型。
-     * 
-     * @param s
-     *            描述整型数据的字符串
+     *
+     * @param s 描述整型数据的字符串
      * @return 返回转换好的int，如果转换时出错则返回0。
      */
     public static int sToI(String s) {
@@ -105,11 +104,9 @@ public class ToolStr {
 
     /**
      * 将字符串表示的整型数据转化为int型。
-     * 
-     * @param s
-     *            描述整型数据的字符串
-     * @param defaultValue
-     *            转换失败时默认返回的值。
+     *
+     * @param s            描述整型数据的字符串
+     * @param defaultValue 转换失败时默认返回的值。
      * @return 返回转换好的int，如果转换时出错则返回defaultValue。
      */
     public static int sToI(String s, int defaultValue) {
@@ -123,9 +120,8 @@ public class ToolStr {
 
     /**
      * 将字符串表示的整型数据转化为double型。
-     * 
-     * @param s
-     *            描述整型数据的字符串
+     *
+     * @param s 描述整型数据的字符串
      * @return 返回转换好的double，如果转换时出错则返回0。
      */
     public static double sToD(String s) {
@@ -134,11 +130,9 @@ public class ToolStr {
 
     /**
      * 将字符串表示的整型数据转化为double型。
-     * 
-     * @param s
-     *            描述整型数据的字符串
-     * @param defaultValue
-     *            转换失败时默认返回的值。
+     *
+     * @param s            描述整型数据的字符串
+     * @param defaultValue 转换失败时默认返回的值。
      * @return 返回转换好的double，如果转换时出错则返回defaultValue。
      */
     public static double sToD(String s, double defaultValue) {
@@ -155,11 +149,9 @@ public class ToolStr {
 
     /**
      * 将字符串表示的整型数据转化为long型。
-     * 
-     * @param s
-     *            描述整型数据的字符串
-     * @param defaultValue
-     *            转换失败时默认返回的值。
+     *
+     * @param s            描述整型数据的字符串
+     * @param defaultValue 转换失败时默认返回的值。
      * @return 返回转换好的int，如果转换时出错则返回defaultValue。
      */
     public static long sToL(String s, long defaultValue) {
@@ -173,11 +165,11 @@ public class ToolStr {
 
     /**
      * 将Long转为String
-     * 
+     *
      * <pre>
      * &#64;param l 如果转换失败，返回""
      * </pre>
-     * 
+     *
      * @return
      */
     public static String L2S(Long l) {
@@ -186,12 +178,12 @@ public class ToolStr {
 
     /**
      * 将Long转为String
-     * 
+     *
      * <pre>
      * &#64;param l
      * &#64;param defaultStr--如果转换失败，返回此值
      * </pre>
-     * 
+     *
      * @return
      */
     public static String L2S(Long l, String defaultStr) {
@@ -211,11 +203,11 @@ public class ToolStr {
 
     /**
      * 将Integer转为String
-     * 
+     *
      * <pre>
      * &#64;param i 如果转换失败，返回""
      * </pre>
-     * 
+     *
      * @return
      */
     public static String I2S(Integer i) {
@@ -224,12 +216,12 @@ public class ToolStr {
 
     /**
      * 将Integer转为String
-     * 
+     *
      * <pre>
      * &#64;param i
      * &#64;param defaultStr--如果转换失败，返回此值
      * </pre>
-     * 
+     *
      * @return
      */
     public static String I2S(Integer i, String defaultStr) {
@@ -252,9 +244,8 @@ public class ToolStr {
      * 用于sql模糊查询<BR>
      * 将字符串中的空格替换为“%”<BR>
      * 字符串两头添加“%” <BR>
-     * 
-     * @param strSource
-     *            需要模糊的字符串
+     *
+     * @param strSource 需要模糊的字符串
      * @return 模糊后的字符串
      */
     public static String fuzzy(String strSource) {
@@ -267,16 +258,15 @@ public class ToolStr {
         }
         return strResult;
     }
-    
+
     /**
      * html字符转换
+     *
      * @param strData
      * @return
      */
-    public static String htmlEscape(String strData)
-    {
-        if (strData == null)
-        {
+    public static String htmlEscape(String strData) {
+        if (strData == null) {
             return "";
         }
         strData = replaceString(strData, "&", "&amp;");
@@ -286,27 +276,24 @@ public class ToolStr {
         strData = replaceString(strData, "\"", "&quot;");
         return strData;
     }
-    
+
     /**
      * 替换？
+     *
      * @param strData
      * @param regex
      * @param replacement
      * @return
      */
-    public static String replaceString(String strData, String regex, String replacement)
-    {
-        if (strData == null)
-        {
+    public static String replaceString(String strData, String regex, String replacement) {
+        if (strData == null) {
             return null;
         }
         int index;
         index = strData.indexOf(regex);
         String strNew = "";
-        if (index >= 0)
-        {
-            while (index >= 0)
-            {
+        if (index >= 0) {
+            while (index >= 0) {
                 strNew += strData.substring(0, index) + replacement;
                 strData = strData.substring(index + regex.length());
                 index = strData.indexOf(regex);
@@ -316,5 +303,33 @@ public class ToolStr {
         }
         return strData;
     }
+
+    /**
+     * 首字母大写
+     *
+     * @param name 需要处理的字符串
+     * @return
+     */
+    public static String captureNametoUp(String name) {
+        char[] cs = name.toCharArray();
+        if (cs[0] > 97 && cs[0] < 122)//a-z的Char，必须符合
+            cs[0] -= 32;
+        return String.valueOf(cs);
+    }
+
+
+    /**
+     * 首字母小写
+     *
+     * @param name 需要处理的字符串
+     * @return
+     */
+    public static String captureNametoLow(String name) {
+        char[] cs = name.toCharArray();
+        if (cs[0] > 65 && cs[0] < 90)//A-Z的Char，必须符合
+            cs[0] += 32;
+        return String.valueOf(cs);
+    }
+
 
 }

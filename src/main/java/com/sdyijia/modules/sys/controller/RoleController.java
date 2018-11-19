@@ -2,7 +2,7 @@ package com.sdyijia.modules.sys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.sdyijia.modules.base.BaseController;
+import com.sdyijia.modules.base.controller.BaseController;
 import com.sdyijia.modules.sys.bean.SysPermission;
 import com.sdyijia.modules.sys.bean.SysRole;
 import com.sdyijia.modules.sys.repository.RoleRepository;
