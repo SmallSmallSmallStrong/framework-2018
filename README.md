@@ -2,6 +2,9 @@
 
 2018框架
 
+2018.11.28
+添加vuejs到 footer
+
 2018.11.19更新<br/>
 添加方法 : <BR>
     ToolStr.captureNametoUp:首字母大写<BR>
