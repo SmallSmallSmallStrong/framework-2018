@@ -3,7 +3,8 @@
 2018框架
 
 2018.11.28
-添加vuejs到 footer
+添加vuejs到 footer<br>
+如果想使用vue,idea最好添加vuejs插件
 
 2018.11.19更新<br/>
 添加方法 : <BR>
