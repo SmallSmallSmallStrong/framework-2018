@@ -1,0 +1,6 @@
+.page {
+    background-color: #ffffff;
+    text-align: center;
+    display: block;
+    z-index: 9999
+}

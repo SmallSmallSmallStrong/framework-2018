@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-
 <div th:fragment="foot">
-    <script th:src="@{/js/default.js}"></script>
     <script th:src="@{/modules/jquery/1.8.3/jquery.js}"></script>
-    <script th:src="@{/modules/layui/layui.all.js}"></script>
-
+    <script th:src="@{/js/default.js}"></script><!--????-->
     <script th:src="@{/modules/h-ui/lib/jquery/1.9.1/jquery.min.js}"></script>
+    <!--layui??--start-->
     <script th:src="@{/modules/h-ui/lib/layer/2.1/layer.js}"></script>
     <script th:src="@{/modules/h-ui/lib/layer/2.1/extend/layer.ext.js}"></script>
-    <script th:src="@{/modules/h-ui/lib/icheck/jquery.icheck.min.js}"></script>
+    <script th:src="@{/modules/layui/layui.all.js}"></script>
+    <!--layui??---end--->
+    <script th:src="@{/js/list.js}"></script>    <!--??-->
+    <script th:src="@{/modules/h-ui/lib/icheck/jquery.icheck.min.js}"></script>    <!--???-->
+    <!--jquer??--start-->
     <script th:src="@{/modules/h-ui/lib/jquery.validation/1.14.0/jquery.validate.min.js}"></script>
     <script th:src="@{/modules/h-ui/lib/jquery.validation/1.14.0/messages_zh.min.js}"></script>
     <script th:src="@{/modules/h-ui/lib/jquery.validation/1.14.0/validate-methods.js}"></script>
+    <!--jquer??---end--->
+    <!--hui??--start-->
     <script th:src="@{/modules/h-ui/js/H-ui.js}"></script>
     <script th:src="@{/modules/h-ui/js/H-ui.admin.js}"></script>
-
+    <!--hui??---end--->
     <script th:src="@{/modules/vue/vue-v2.5.17.js}"></script>
-
+    <script th:src="@{/modules/toastr/toastr.min.js}"></script>
 </div>
-
-
 </body>
-
 </html>
 
